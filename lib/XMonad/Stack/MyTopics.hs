@@ -47,8 +47,7 @@ myTopicsDef =
   , ( "Instant messaging"
     , spawn "kopete" >> -- kde msn/jabber
       spawn "quassel"   -- kde irc
-    , [ (className =? "Kopete" <||>
-         appName =? "kopete", doShift)
+    , [ (className =? "Kopete", doShift)
       , (className =? "Quassel", doShift)])
 
   , ( "Multimedia"
@@ -56,8 +55,8 @@ myTopicsDef =
     , [(className =? "Sonata", doShift)])
 
   , ( "Organise"
-    , spawn "gmail" >>
-      spawn "gcal"
+    , spawn (inDummyBrowser "http://gmail.com") >>
+      spawn (inDummyBrowser "http://calendar.google.com")
     , [])
 
   , ( "Reading"
@@ -70,7 +69,7 @@ myTopicsDef =
     , [])
 
   , ( "Absalon"
-    , spawn $ inDummyBrowser "punkt.ku.dk"
+    , spawn $ inDummyBrowser "http://punkt.ku.dk"
     , [])
 
   , ( "VirtualBox"
@@ -85,7 +84,7 @@ myTopicsDef =
     -- Configuration
   , ( "XMonad"
     , spawn "emacs ~/.xmonad/xmonad.hs" >>
-      spawn (inDummyBrowser "http://xmonad.org/xmonad-docs/xmonad-contrib/index.html")
+      spawn (inDummyBrowser "http://www.eng.uwaterloo.ca/~aavogt/xmonad/docs/")
     , [])
 
   , ( "Install"
@@ -94,11 +93,11 @@ myTopicsDef =
 
     -- Coding
   , ( "SML"
-    , return ()
+    , spawn (emacs "/tmp/foo.sml")
     , [])
 
   , ( "haskell"
-    , return ()
+    , spawn (emacs "/tmp/foo.hs")
     , [])
 
     -- Projects
@@ -113,6 +112,7 @@ myTopicsDef =
       --viewShift = doF . liftM2 (.) W.greedyView W.shift
       inBrowser s = "chromium-browser " ++ s
       inDummyBrowser s = "surf " ++ s
+      emacs s = "emacs " ++ s -- TODO: Change to emacs client, possibly named in some kind.
 
 myDefaultTopicAction = spawn "konsole"
 
@@ -120,9 +120,9 @@ myTopics = map getTopic myTopicsDef
 
 myTopicsAction = map (\(topic, action, _) -> (topic, action)) myTopicsDef
 
-myManageHook = (concat $ unfoldTopicHooks)
-               -- Debugging hooks
-               --++ myDebugManageHook
+myManageHook = concat unfoldTopicHooks
+               -- Debugging hook
+               -- ++ myDebugManageHook
   where
     nonEmptyHooks = filter (not . null . getManageHooks) myTopicsDef
     unfoldHooks topic =
@@ -132,6 +132,7 @@ myManageHook = (concat $ unfoldTopicHooks)
       map (\(topic, _, manageHooks) -> unfoldHooks topic manageHooks) nonEmptyHooks
 
 
+myDebugManageHook :: [ManageHook]
 myDebugManageHook =
   [return True -->
    do
