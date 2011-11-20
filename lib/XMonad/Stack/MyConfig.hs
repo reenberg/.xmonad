@@ -33,7 +33,8 @@ import XMonad.Util.WindowProperties (getProp32s)
 -- Miscellaneous commonly used types. Direction2D exports: U, D, L, R
 import XMonad.Util.Types (Direction2D(..))
 
-
+-- Used for setting the lowest logging level.
+import System.Log.Logger (Priority(..))
 
 
 -- My modifications
@@ -89,4 +90,6 @@ myConfig =
         -- myLogHook h
 
     , workspaces = myTopics
+
+    , logFilePriority = DEBUG
     }
