@@ -1,4 +1,6 @@
 xmonad.errors
+xmonad.log
+xmonad.state
 xmonad-*
 *.o
 *.hi
