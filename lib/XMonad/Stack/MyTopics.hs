@@ -44,7 +44,11 @@ myTopicsDef =
     , spawn "chromium-browser"
     , [])
 
-  , ( "Instant messaging"
+  , ( "Netbank"
+    , spawn (inDummyBrowser "https://netbank.danskebank.dk/")
+    , [])
+
+  , ( "IM"
     , spawn "kopete" >> -- kde msn/jabber
       spawn "quassel"   -- kde irc
     , [ (className =? "Kopete", doShift)
@@ -55,17 +59,17 @@ myTopicsDef =
     , [(className =? "Sonata", doShift)])
 
   , ( "Organise"
-    , spawn (inDummyBrowser "http://gmail.com") >>
-      spawn (inDummyBrowser "http://calendar.google.com")
+    , spawn (inDummyBrowser "http://calendar.google.com") >>
+      spawn (inDummyBrowser "http://gmail.com")
     , [])
 
   , ( "Reading"
     , return ()
-    , [])
+    , [(className =? "Okular", doShift)])
 
 
   , ( "Study"
-    , return ()
+    , spawn "emacs"
     , [])
 
   , ( "Absalon"
@@ -83,7 +87,7 @@ myTopicsDef =
 
     -- Configuration
   , ( "XMonad"
-    , spawn "emacs ~/.xmonad/xmonad.hs" >>
+    , spawn "emacs ~/.xmonad/lib/XMonad/Stack/MyTopics.hs" >>
       spawn (inDummyBrowser "http://www.eng.uwaterloo.ca/~aavogt/xmonad/docs/")
     , [])
 

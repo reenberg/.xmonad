@@ -22,7 +22,8 @@ import XMonad.Stack.MyConfig (myConfig)
 
 
 main = do
-  -- Enable topics based workspaces
+  -- Verify topics based workspaces. This is however not needed anymore, as of
+  -- my new design.
   checkTopicConfig myTopics myTopicConfig
   xmonad $ myConfig
 
