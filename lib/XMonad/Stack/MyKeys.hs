@@ -46,12 +46,15 @@ myNewKeys modM =
 -- you any combination of guards to modify the resulting keyActionmap
 changeConfigKeys :: ButtonMask -> (ButtonMask, KeySym) -> X() -> KeyActionMap -> KeyActionMap
 changeConfigKeys modM keys action newConfigKeys
+    -- Reload XMonad
+  | keys == (modM,  xK_q)
+           -- REBIND to use the Shift modifier and backspace instead. This is
+           -- sufficiently awkward, that it is not hit by accident.
+           = M.insert (modSM, xK_BackSpace) action newConfigKeys
     -- Keep the ones below, in unmodified state.
   | keys `elem`
-    [ -- Reload XMonad
-      (modM,  xK_q)
-      -- Quit XMonad
-    , (modSM, xK_q)
+    [ -- Quit XMonad
+      (modSM, xK_q)
 
       -- Launch terminal
     , (modSM, xK_Return)
