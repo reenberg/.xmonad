@@ -37,6 +37,9 @@ myNewKeys modM =
   , ((modM,  xK_a), myGoToSelectedWS True)
     -- Show all workspaces, and move current window to selected
   , ((modSM, xK_a), myShiftToSelectedWS True)
+
+    -- KDE lock screen.
+  , ((modM, xK_Escape), spawn "qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock")
   ]
     where
       modSM = modM .|. shiftMask
