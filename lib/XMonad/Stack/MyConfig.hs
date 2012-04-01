@@ -26,7 +26,7 @@ import XMonad.Hooks.ManageDocks (manageDocks, avoidStrutsOn)
 -- Makes XMonad set the _NET_WM_WINDOW_OPACITY atom for inactive windows, which
 -- causes those windows to become slightly translucent if something like
 -- xcompmgr is running.
-import XMonad.Hooks.FadeInactive (fadeInactiveLogHook)
+import XMonad.Hooks.FadeInactive (fadeInactiveCurrentWSLogHook, fadeInactiveLogHook)
 
 -- Used for kdeOverride
 import XMonad.Util.WindowProperties (getProp32s)
@@ -35,6 +35,9 @@ import XMonad.Util.Types (Direction2D(..))
 
 -- Used for setting the lowest logging level.
 import System.Log.Logger (Priority(..))
+
+-- Temporarily fix SWING applications
+import XMonad.Hooks.SetWMName (setWMName)
 
 
 -- My modifications
@@ -86,8 +89,11 @@ myConfig =
 
     , logHook = do
         -- Sets transparancy on non focues windows.
-        fadeInactiveLogHook 0.7
-        -- myLogHook h
+        fadeInactiveCurrentWSLogHook 0.7
+        -- fadeInactiveLogHook 1
+
+        -- Fix SWING applications.
+        >> setWMName "LG3D"
 
     , workspaces = myTopics
 
