@@ -55,7 +55,7 @@ myTopicsDef =
       , (className =? "Quassel", doShift)])
 
   , ( "Multimedia"
-    , spawn $ inDummyBrowser "http://grooveshark.com"
+    , spawn "spotify" -- spotify linux preview client
     , [(className =? "Sonata", doShift)])
 
   , ( "Organise"
