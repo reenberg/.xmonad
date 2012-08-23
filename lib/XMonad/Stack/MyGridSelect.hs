@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances #-} -- For: instance HasColorizer WindowSpace
+{-# LANGUAGE FlexibleInstances #-} -- For: instance HasColorizer WindowSpace
 
 -- Original Work by Morten Brøns
 module XMonad.Stack.MyGridSelect
